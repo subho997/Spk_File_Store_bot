@@ -22,7 +22,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
             text=HELP_TXT.format(first=query.from_user.first_name),
             disable_web_page_preview=True,
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("ʜᴏᴍᴇ", callback_data='start'),
+                [InlineKeyboardButton("ʜᴏᴍᴇ", callback_data='/start'),
                  InlineKeyboardButton("ᴄʟᴏꜱᴇ", callback_data='close')]
             ])
         )
@@ -73,7 +73,7 @@ async def cb_handler(client: Bot, query: CallbackQuery):
                 f"● {PRICE2}  For 7 Days Prime Membership\n\n"
                 f"● {PRICE3}  For 1 Months Prime Membership\n\n"
                 f"● {PRICE4}  For 2 Months Prime Membership\n\n"
-                f"● {PRICE5}  For 3 Year Prime Membership\n\n\n"
+                f"● {PRICE5}  For 3 Months Prime Membership\n\n\n"
                 f"💵 ASK UPI ID TO ADMIN AND PAY THERE -  <code>{UPI_ID}</code>\n\n\n"
                 f"♻️ After Payment You Will Get Instant Membership \n\n\n"
                 f"‼️ Must Send Screenshot after payment & If anyone want custom time membrship then ask admin"
