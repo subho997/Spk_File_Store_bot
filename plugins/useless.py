@@ -35,7 +35,7 @@ START_TIME = time.time()
 def get_readable_time(seconds: int) -> str:
     count = 0
     time_list = []
-    time_suffix_list = ["days", "h", "m", "s"]
+    time_suffix_list = ["s", "m", "h", "days"]
 
     while count < 4:
         count += 1
