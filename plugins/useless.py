@@ -28,12 +28,40 @@ from database.database import *
 
 #=====================================================================================##
 
-@Bot.on_message(filters.command('stats') & admin)
+# Capture the bot start time
+START_TIME = time.time()
+
+# Helper function to format uptime nicely
+def get_readable_time(seconds: int) -> str:
+    count = 0
+    time_list = []
+    time_suffix_list = ["s", "m", "h", "days"]
+
+    while count < 4:
+        count += 1
+        if count < 3:
+            remainder, result = divmod(seconds, 60)
+        else:
+            remainder, result = divmod(seconds, 24)
+        if seconds == 0 and remainder == 0:
+            break
+        time_list.append(int(result))
+        seconds = int(remainder)
+
+    time_list = time_list[::-1]
+    readable_time = ""
+    for i in range(len(time_list)):
+        readable_time += f"{time_list[i]}{time_suffix_list[i]} "
+    return readable_time.strip()
+
+# Stats command
+@Bot.on_message(filters.command("stats") & admin)
 async def stats(bot: Bot, message: Message):
-    now = datetime.now()
-    delta = now - bot.uptime
-    time = get_readable_time(delta.seconds)
-    await message.reply(BOT_STATS_TEXT.format(uptime=time))
+    current_time = time.time()
+    uptime = get_readable_time(int(current_time - START_TIME))
+    await message.reply(
+        BOT_STATS_TEXT.format(uptime=uptime)
+    )
 
 
 #=====================================================================================##
