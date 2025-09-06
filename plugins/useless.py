@@ -57,10 +57,6 @@ def get_readable_time(seconds: int) -> str:
 # Stats command
 @Bot.on_message(filters.command("stats"))
 async def stats(bot: Bot, message: Message):
-    
-    if not await is_admin(message.from_user.id):
-        return await message.reply(USER_REPLY_TEXT)
-
     current_time = time.time()
     uptime = get_readable_time(int(current_time - START_TIME))
     await message.reply(
