@@ -113,26 +113,6 @@ async def check_delete_time(client: Bot, message: Message):
 
 #=====================================================================================##
 
-# List of admin-only commands
-ADMIN_COMMANDS = [
-    "batch", "custom_batch", "genlink", "users", "broadcast", "dbroadcast",
-    "stats", "dlt_time", "check_dlt_time", "ban", "unban", "banlist",
-    "addchnl", "delchnl", "listchnl", "fsub_mode", "pbroadcast",
-    "add_admin", "deladmin", "admins", "addpremium", "premium_users",
-    "remove_premium", "count", "delreq"
-]
-
-@Bot.on_message(filters.command(ADMIN_COMMANDS))
-async def check_admin(bot: Bot, message: Message):
-    user_id = message.from_user.id
-    
-    # if user is admin → let the original handler run
-    if await is_admin(user_id):
-        return  # do nothing, main handler will execute
-    
-    # if user is not admin → reply with USER_REPLY_TEXT
-    await message.reply(USER_REPLY_TEXT)
-
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
 #
