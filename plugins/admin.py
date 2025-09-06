@@ -148,18 +148,6 @@ async def get_admins(client: Client, message: Message):
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close")]])
     await pro.edit(f"<b>⚡ Current Admin List:</b>\n\n{admin_list}", reply_markup=reply_markup)
 
-@Bot.on_message(filters.command(ADMIN_COMMANDS))
-async def check_admin(bot: Bot, message: Message):
-    user_id = message.from_user.id
-
-    # ✅ If user is admin → do nothing (main handler will work)
-    if await is_admin(user_id):
-        return  
-
-    # ❌ If user is not admin → reply with USER_REPLY_TEXT
-    await message.reply(USER_REPLY_TEXT)
-
-
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
 #
