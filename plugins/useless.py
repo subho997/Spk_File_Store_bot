@@ -124,3 +124,16 @@ async def check_delete_time(client: Bot, message: Message):
 #
 # All rights reserved.
 #
+
+# Catch non-admin users trying to use admin-only commands
+@Bot.on_message(filters.command([
+    "batch", "custom_batch", "genlink", "users", "broadcast", "dbroadcast",
+    "stats", "dlt_time", "check_dlt_time", "ban", "unban", "banlist",
+    "addchnl", "delchnl", "listchnl", "fsub_mode", "pbroadcast",
+    "add_admin", "deladmin", "admins", "addpremium", "premium_users",
+    "remove_premium", "count", "delreq"
+]))
+async def not_admin(bot: Bot, message: Message):
+    # if user is not admin → reply with USER_REPLY_TEXT
+    if not await is_admin(message.from_user.id):
+        return await message.reply(USER_REPLY_TEXT)
