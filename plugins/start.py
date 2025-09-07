@@ -101,7 +101,7 @@ async def start_command(client: Client, message: Message):
     f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
     f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
     f"🔍 <b>What is the token??</b>\n\n"
-    f"ℹ️ This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
+    f"📌 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
     f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
     reply_markup=InlineKeyboardMarkup(btn)
             )  
