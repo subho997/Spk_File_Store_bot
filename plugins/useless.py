@@ -33,28 +33,21 @@ START_TIME = time.time()
 
 # Helper function to format uptime nicely
 def get_readable_time(seconds: int) -> str:
-    count = 0
-    time_list = []
-    time_suffix_list = ["days", "h", "m", "s"]  # correct order
+    days, seconds = divmod(seconds, 86400)
+    hours, seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
 
-    while count < 4:
-        count += 1
-        if count == 1:  # days
-            remainder, result = divmod(seconds, 86400)
-        elif count == 2:  # hours
-            remainder, result = divmod(seconds, 3600)
-        elif count == 3:  # minutes
-            remainder, result = divmod(seconds, 60)
-        else:  # seconds
-            remainder, result = divmod(seconds, 1)
+    time_parts = []
+    if days > 0:
+        time_parts.append(f"{days}d")
+    if hours > 0:
+        time_parts.append(f"{hours}h")
+    if minutes > 0:
+        time_parts.append(f"{minutes}m")
+    if seconds > 0:
+        time_parts.append(f"{seconds}s")
 
-        if seconds == 0 and remainder == 0:
-            break
-
-        time_list.append(f"{int(result)}{time_suffix_list[count-1]}")
-        seconds = int(remainder)
-
-    return " ".join(time_list)
+    return " ".join(time_parts)
 
 
 # Stats command
@@ -63,7 +56,7 @@ async def stats(bot: Bot, message: Message):
     current_time = time.time()
     uptime = get_readable_time(int(current_time - START_TIME))
     await message.reply(
-        BOT_STATS_TEXT.format(uptime=uptime)
+        f"🤖 BOT UPTIME\n{uptime}"
     )
 
 #=====================================================================================##
