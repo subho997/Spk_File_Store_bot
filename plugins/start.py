@@ -97,7 +97,7 @@ async def start_command(client: Client, message: Message):
                      InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
                     [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
-               return await message.reply(
+                return await message.reply(
     f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
     f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
     f"🔍 <b>What is the token??</b>\n\n"
