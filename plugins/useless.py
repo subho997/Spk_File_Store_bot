@@ -35,24 +35,27 @@ START_TIME = time.time()
 def get_readable_time(seconds: int) -> str:
     count = 0
     time_list = []
-    time_suffix_list = ["s", "m", "h", "days"]
+    time_suffix_list = ["days", "h", "m", "s"]  # সঠিক অর্ডার
 
     while count < 4:
         count += 1
-        if count < 3:
+        if count == 1:  # days
+            remainder, result = divmod(seconds, 86400)
+        elif count == 2:  # hours
+            remainder, result = divmod(seconds, 3600)
+        elif count == 3:  # minutes
             remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        else:  # seconds
+            remainder, result = divmod(seconds, 1)
+
         if seconds == 0 and remainder == 0:
             break
-        time_list.append(int(result))
+
+        time_list.append(f"{int(result)}{time_suffix_list[count-1]}")
         seconds = int(remainder)
 
-    time_list = time_list[::-1]
-    readable_time = ""
-    for i in range(len(time_list)):
-        readable_time += f"{time_list[i]}{time_suffix_list[i]} "
-    return readable_time.strip()
+    return " ".join(time_list)
+
 
 # Stats command
 @Bot.on_message(filters.command("stats"))
@@ -62,7 +65,6 @@ async def stats(bot: Bot, message: Message):
     await message.reply(
         BOT_STATS_TEXT.format(uptime=uptime)
     )
-
 
 #=====================================================================================##
 
