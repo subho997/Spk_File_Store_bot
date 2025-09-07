@@ -97,14 +97,14 @@ async def start_command(client: Client, message: Message):
                      InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
                     [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
-                return await message.reply(
-                f"🚨 𝗬𝗼𝘂𝗿 𝘁𝗼𝗸𝗲𝗻 𝗵𝗮𝘀 𝗲𝘅𝗽𝗶𝗿𝗲𝗱. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗿𝗲𝗳𝗿𝗲𝘀𝗵 𝘆𝗼𝘂𝗿 𝘁𝗼𝗸𝗲𝗻 𝘁𝗼 𝗰𝗼𝗻𝘁𝗶𝗻𝘂𝗲..\n\n"
-                f"⏳ <b>Tᴏᴋᴇɴ Tɪᴍᴇᴏᴜᴛ:</b> {get_exp_time(VERIFY_EXPIRE)}\n\n"
-                f"❓ <b>ᴡʜᴀᴛ ɪs ᴛʜᴇ ᴛᴏᴋᴇɴ??</b>\n\n"
-                f"📌 ᴛʜɪs ɪs ᴀɴ <b>Aᴅs Tᴏᴋᴇɴ</b>. ᴘᴀssɪɴɢ ᴏɴᴇ ᴀᴅ ᴀʟʟᴏᴡs ʏᴏᴜ ᴛᴏ ᴜsᴇ ᴛʜᴇ ʙᴏᴛ ғᴏʀ <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
-                f"⚡ <b>Verification takes less than 30 seconds!</b> ✅",
-                       reply_markup=InlineKeyboardMarkup(btn)
-                )
+               return await message.reply(
+                  f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
+                  f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
+                  f"🔍 <b>What is the token??</b>\n\n"
+                  f"📌 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
+                  f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
+                      reply_markup=InlineKeyboardMarkup(btn)
+                         )
 
         try:
             base64_string = text.split(" ", 1)[1]
