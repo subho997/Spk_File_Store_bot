@@ -22,7 +22,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, UserNotParticipant
 from bot import Bot
-from config import USER_REPLY_TEXT
+from config import ADMINS, BOT_STATS_TEXT, USER_REPLY_TEXT
 from helper_func import *
 from database.database import *
 
@@ -110,6 +110,17 @@ async def check_delete_time(client: Bot, message: Message):
 
 @Bot.on_message(filters.private & filters.incoming)
 async def useless(_,message: Message):
+    if USER_REPLY_TEXT:
+        await message.reply(USER_REPLY_TEXT)
+
+from pyrogram import filters
+from pyrogram.types import Message
+
+ADMINS = {123456789, 987654321}  # আপনার/আপনাদের user_id দিন
+
+@Bot.on_message(filters.private & filters.incoming & ~filters.user(ADMINS))
+async def useless(_, message: Message):
+    # এটা কেবল নন-অ্যাডমিনদের জন্য চলবে
     if USER_REPLY_TEXT:
         await message.reply(USER_REPLY_TEXT)
 
