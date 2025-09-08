@@ -106,6 +106,21 @@ async def check_delete_time(client: Bot, message: Message):
 
     await message.reply(f"<b><blockquote>Cᴜʀʀᴇɴᴛ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇʀ ɪs sᴇᴛ ᴛᴏ {duration}sᴇᴄᴏɴᴅs.</blockquote></b>")
 
+@Bot.on_message(filters.command("stats"))
+async def stats_handler(_, message: Message):
+    # Check if the user is NOT an admin
+    if message.from_user.id not in ADMINS:
+        # Option 1: Send nothing (just return)
+        return
+        
+        # Option 2: Send a warning (but only to non-admins)
+        # await message.reply("❌ You are not authorized to use this command.")
+        return
+    
+    # If the user is an admin, send the actual stats
+    # Replace this with your actual stats code
+    await message.reply("📊 Admin stats here...")
+
 #=====================================================================================##
 
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
