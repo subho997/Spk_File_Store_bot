@@ -108,12 +108,11 @@ async def check_delete_time(client: Bot, message: Message):
 
 #=====================================================================================##
 
-ADMINS = {6047654034}  
+ADMINS = {6047654034}  # এখানে নিজের Telegram user_id দিন
 
-@Bot.on_message(filters.private & filters.incoming & ~filters.user(ADMINS))
-async def useless(_, message: Message):
-    if USER_REPLY_TEXT:
-        await message.reply(USER_REPLY_TEXT)
+@Bot.on_message(filters.command("stats") & filters.user(ADMINS))
+async def stats_handler(_, message: Message):
+    await message.reply("Only admins can see this.")
 
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
