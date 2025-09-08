@@ -103,9 +103,8 @@ async def set_delete_time(client: Bot, message: Message):
 @Bot.on_message(filters.private & filters.command('check_dlt_time') & admin)
 async def check_delete_time(client: Bot, message: Message):
     duration = await db.get_del_timer()
+  
     await message.reply(f"<b><blockquote>Cᴜʀʀᴇɴᴛ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇʀ ɪs sᴇᴛ ᴛᴏ {duration}sᴇᴄᴏɴᴅs.</blockquote></b>")
-
-
 
 # Custom filter to check non-admin users
 def non_admin_user(_, message):
