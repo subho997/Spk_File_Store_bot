@@ -65,7 +65,8 @@ def get_readable_time(seconds: int) -> str:
 
 
 # Stats command
-@Bot.on_message(filters.command("stats")) @admin_only
+@Bot.on_message(filters.command("stats")) 
+@admin_only
 async def stats(bot: Bot, message: Message):
     current_time = time.time()
     uptime = get_readable_time(int(current_time - START_TIME))
