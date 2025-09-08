@@ -67,63 +67,44 @@ async def start_command(client: Client, message: Message):
     FILE_AUTO_DELETE = await db.get_del_timer()             # Example: 3600 seconds (1 hour)
 
 
-    @Bot.on_message(filters.text & filters.private)
-async def token_verify(client: Client, message: Message):
-    # Send a temporary "wait" message first
-    temp = await message.reply("Wait a sec...", quote=True)
     text = message.text
-
     if len(text) > 7:
+        # Token verification 
         verify_status = await db.get_verify_status(id)
 
         if SHORTLINK_URL or SHORTLINK_API:
-            # If token is expired, mark as not verified
             if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
                 await db.update_verify_status(user_id, is_verified=False)
 
-            # Check if this is a verification token
             if "verify_" in message.text:
                 _, token = message.text.split("_", 1)
                 if verify_status['verify_token'] != token:
-                    return await temp.edit("⚠️ Invalid token. Please /start again.")
+                    return await message.reply("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
 
-                # Mark user as verified
                 await db.update_verify_status(id, is_verified=True, verified_time=time.time())
                 current = await db.get_verify_count(id)
                 await db.set_verify_count(id, current + 1)
-
-                return await temp.edit(
-                    f"✅ Token verified! Valid for {get_exp_time(VERIFY_EXPIRE)}"
+                return await message.reply(
+                    f"✅ 𝗧𝗼𝗸𝗲𝗻 𝘃𝗲𝗿𝗶𝗳𝗶𝗲𝗱! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
                 )
 
-            # If not verified and not premium, generate a new token
             if not verify_status['is_verified'] and not is_premium:
                 token = ''.join(random.choices(rohit.ascii_letters + rohit.digits, k=10))
                 await db.update_verify_status(id, verify_token=token, link="")
-
-                # Generate shortlink
-                link = await get_shortlink(
-                    SHORTLINK_URL,
-                    SHORTLINK_API,
-                    f'https://telegram.dog/{client.username}?start=verify_{token}'
-                )
-
-                # Buttons
+                link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.dog/{client.username}?start=verify_{token}')
                 btn = [
-                    [InlineKeyboardButton("• Open Link •", url=link),
-                     InlineKeyboardButton("• Tutorial •", url=TUT_VID)],
-                    [InlineKeyboardButton("• Buy Premium •", callback_data="premium")]
+                    [InlineKeyboardButton("• ᴏᴘᴇɴ ʟɪɴᴋ •", url=link),
+                     InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
+                    [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
-
-                return await temp.edit(
-                    f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
-                    f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
-                    f"🔍 <b>What is the token?</b>\n\n"
-                    f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot "
-                    f"for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
-                    f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
-                    reply_markup=InlineKeyboardMarkup(btn)
-                )
+                return await message.reply(
+                  f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
+                  f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
+                  f"🔍 <b>What is the token??</b>\n\n"
+                  f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
+                  f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
+                         reply_markup=InlineKeyboardMarkup(btn)
+                )  
 
         try:
             base64_string = text.split(" ", 1)[1]
