@@ -55,43 +55,53 @@ ABOUT_TXT = "<b><blockquote>◈ ᴄʀᴇᴀᴛᴏʀ: <a href=https://t.me/spk_li
 START_MSG = os.environ.get("START_MESSAGE", "<b>ʜᴇʟʟᴏ {mention}\n\n<blockquote> ɪ ᴀᴍ ғɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ, ɪ ᴄᴀɴ sᴛᴏʀᴇ ᴘʀɪᴠᴀᴛᴇ ғɪʟᴇs ɪɴ sᴘᴇᴄɪғɪᴇᴅ ᴄʜᴀɴɴᴇʟ ᴀɴᴅ ᴏᴛʜᴇʀ ᴜsᴇʀs ᴄᴀɴ ᴀᴄᴄᴇss ɪᴛ ғʀᴏᴍ sᴘᴇᴄɪᴀʟ ʟɪɴᴋ.</blockquote></b>")
 FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "ʜᴇʟʟᴏ {mention}\n\n<b><blockquote>ᴊᴏɪɴ ᴏᴜʀ ᴄʜᴀɴɴᴇʟs ᴀɴᴅ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ʀᴇʟᴏᴀᴅ button ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛᴇᴅ ꜰɪʟᴇ.</b></blockquote>")
 
-CMD_TXT = """<blockquote><b>» ADMIN COMMANDS:</b></blockquote>
+CMD_TXT = """<blockquote><b>» BOT COMMANDS:</b></blockquote>
 
-<blockquote><b>📊 Bot Statistics</b></blockquote>
-<b>/users :</b> VIEW BOT STATISTICS (ADMIN ONLY)
-<b>/stats :</b> CHECK YOUR BOT UPTIME (ADMIN ONLY)
-<b>/count :</b> COUNT SHORTNER CLICKS (ADMIN ONLY)
+<b>🚀 General</b>
+<code>/start</code> – <i>Start the bot or get posts</i>
+<code>/myplan</code> – <i>Check your premium status</i>
+<code>/commands</code> – <i>View all available commands</i>
 
-<blockquote><b>📢 Broadcast Commands</b></blockquote>
-<b>/broadcast :</b> BROADCAST ANY MESSAGES TO BOT USERS (ADMIN ONLY)
-<b>/dbroadcast :</b> BROADCAST ANY MESSAGES WITH AUTO DELETE (ADMIN ONLY)
-<b>/pbroadcast :</b> PIN A BROADCAST TO ALL USER'S CHAT (ADMIN ONLY)
+<b>🔗 Link Generation</b>
+<code>/batch</code> – <i>Create link for more than one posts</i>
+<code>/custom_batch</code> – <i>Create custom batch from channel/group</i>
+<code>/genlink</code> – <i>Create link for one post</i>
 
-<blockquote><b>⏳ Auto Delete</b></blockquote>
-<b>/dlt_time :</b> SET AUTO DELETE TIME FOR FILES (ADMIN ONLY)
-<b>/check_dlt_time :</b> CHECK CURRENT DELETE TIME SETTING (ADMIN ONLY)
+<b>📊 Bot Statistics</b>
+<code>/users</code> – <i>View bot statistics</i>
+<code>/stats</code> – <i>Check your bot uptime</i>
+<code>/count</code> – <i>Count shortner clicks</i>
 
-<blockquote><b>🚫 User Management</b></blockquote>
-<b>/ban :</b> BAN A USER FROM USING THE BOT (ADMIN ONLY)
-<b>/unban :</b> UNBAN A PREVIOUSLY BANNED USER (ADMIN ONLY)
-<b>/banlist :</b> GET LIST OF BANNED USERS (ADMIN ONLY)
-<b>/delreq :</b> REMOVE USERS THAT LEFT CHANNEL AND NOT GETTING REQUEST FSUB (ADMIN ONLY)
+<b>📢 Broadcast</b>
+<code>/broadcast</code> – <i>Broadcast any messages</i>
+<code>/dbroadcast</code> – <i>Broadcast with auto delete</i>
+<code>/pbroadcast</code> – <i>Pin a broadcast message</i>
 
-<blockquote><b>📺 Force Subscribe</b></blockquote>
-<b>/addchnl :</b> ADD A CHANNEL FOR FORCE SUBSCRIPTION (ADMIN ONLY)
-<b>/delchnl :</b> REMOVE A FORCE SUBSCRIBE CHANNEL (ADMIN ONLY)
-<b>/listchnl :</b> VIEW ALL ADDED FORCE SUBSCRIBE CHANNELS (ADMIN ONLY)
-<b>/fsub_mode :</b> TOGGLE FORCE SUBSCRIBE ON OR OFF (ADMIN ONLY)
+<b>⏳ Auto Delete</b>
+<code>/dlt_time</code> – <i>Set auto delete time</i>
+<code>/check_dlt_time</code> – <i>Check current delete time</i>
 
-<blockquote><b>👮 Admin Management</b></blockquote>
-<b>/add_admin :</b> ADD A NEW ADMIN (ADMIN ONLY)
-<b>/deladmin :</b> REMOVE AN ADMIN (ADMIN ONLY)
-<b>/admins :</b> LIST ALL CURRENT ADMINS (ADMIN ONLY)
+<b>🚫 User Control</b>
+<code>/ban</code> – <i>Ban a user</i>
+<code>/unban</code> – <i>Unban a user</i>
+<code>/banlist</code> – <i>List of banned users</i>
+<code>/delreq</code> – <i>Remove users left channel</i>
 
-<blockquote><b>⭐ Premium Management</b></blockquote>
-<b>/addpremium :</b> GRANT PREMIUM ACCESS TO A USER (ADMIN ONLY)
-<b>/premium_users :</b> LIST ALL PREMIUM USERS (ADMIN ONLY)
-<b>/remove_premium :</b> REMOVE PREMIUM FROM A USER (ADMIN ONLY)
+<b>📺 Force Subscribe</b>
+<code>/addchnl</code> – <i>Add force-sub channel</i>
+<code>/delchnl</code> – <i>Remove force-sub channel</i>
+<code>/listchnl</code> – <i>View added channels</i>
+<code>/fsub_mode</code> – <i>Toggle force-sub on/off</i>
+
+<b>👮 Admin</b>
+<code>/add_admin</code> – <i>Add an admin</i>
+<code>/deladmin</code> – <i>Remove an admin</i>
+<code>/admins</code> – <i>List admins</i>
+
+<b>⭐ Premium</b>
+<code>/addpremium</code> – <i>Grant premium</i>
+<code>/premium_users</code> – <i>List premium users</i>
+<code>/remove_premium</code> – <i>Revoke premium</i>
 """
 #--------------------------------------------
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", "<b>• ʙʏ @spk_links</b>") #set your Custom Caption here, Keep None for Disable Custom Caption
