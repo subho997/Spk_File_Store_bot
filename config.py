@@ -55,53 +55,62 @@ ABOUT_TXT = "<b><blockquote>◈ ᴄʀᴇᴀᴛᴏʀ: <a href=https://t.me/spk_li
 START_MSG = os.environ.get("START_MESSAGE", "<b>ʜᴇʟʟᴏ {mention}\n\n<blockquote> ɪ ᴀᴍ ғɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ, ɪ ᴄᴀɴ sᴛᴏʀᴇ ᴘʀɪᴠᴀᴛᴇ ғɪʟᴇs ɪɴ sᴘᴇᴄɪғɪᴇᴅ ᴄʜᴀɴɴᴇʟ ᴀɴᴅ ᴏᴛʜᴇʀ ᴜsᴇʀs ᴄᴀɴ ᴀᴄᴄᴇss ɪᴛ ғʀᴏᴍ sᴘᴇᴄɪᴀʟ ʟɪɴᴋ.</blockquote></b>")
 FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "ʜᴇʟʟᴏ {mention}\n\n<b><blockquote>ᴊᴏɪɴ ᴏᴜʀ ᴄʜᴀɴɴᴇʟs ᴀɴᴅ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ʀᴇʟᴏᴀᴅ button ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛᴇᴅ ꜰɪʟᴇ.</b></blockquote>")
 
-CMD_TXT = """<blockquote><b>» BOT COMMANDS:</b></blockquote>
+CMD_TXT = """<blockquote><b>» ᴀᴅᴍɪɴ ᴄᴏᴍᴍᴀɴᴅꜱ:</b></blockquote>
 
-<b>🚀 General</b>
-<code>/start</code> – <i>Start the bot or get posts</i>
-<code>/myplan</code> – <i>Check your premium status</i>
-<code>/commands</code> – <i>View all available commands</i>
+<blockquote><b>🚀 ɢᴇɴᴇʀᴀʟ</b></blockquote>
 
-<b>🔗 Link Generation</b>
-<code>/batch</code> – <i>Create link for more than one posts</i>
-<code>/custom_batch</code> – <i>Create custom batch from channel/group</i>
-<code>/genlink</code> – <i>Create link for one post</i>
+<b>/start :</b> ꜱᴛᴀʀᴛ ᴛʜᴇ ʙᴏᴛ ᴏʀ ɢᴇᴛ ᴘᴏꜱᴛꜱ  
+<b>/myplan :</b> ᴄʜᴇᴄᴋ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ ꜱᴛᴀᴛᴜꜱ  
+<b>/commands :</b> ᴠɪᴇᴡ ᴀʟʟ ᴀᴠᴀɪʟᴀʙʟᴇ ᴄᴏᴍᴍᴀɴᴅꜱ  
 
-<b>📊 Bot Statistics</b>
-<code>/users</code> – <i>View bot statistics</i>
-<code>/stats</code> – <i>Check your bot uptime</i>
-<code>/count</code> – <i>Count shortner clicks</i>
+<blockquote><b>🔗 ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛɪᴏɴ</b></blockquote>
 
-<b>📢 Broadcast</b>
-<code>/broadcast</code> – <i>Broadcast any messages</i>
-<code>/dbroadcast</code> – <i>Broadcast with auto delete</i>
-<code>/pbroadcast</code> – <i>Pin a broadcast message</i>
+<b>/batch :</b> ᴄʀᴇᴀᴛᴇ ʟɪɴᴋ ꜰᴏʀ ᴍᴏʀᴇ ᴛʜᴀɴ ᴏɴᴇ ᴘᴏꜱᴛꜱ  
+<b>/custom_batch :</b> ᴄʀᴇᴀᴛᴇ ᴄᴜꜱᴛᴏᴍ ʙᴀᴛᴄʜ ꜰʀᴏᴍ ᴄʜᴀɴɴᴇʟ/ɢʀᴏᴜᴘ  
+<b>/genlink :</b> ᴄʀᴇᴀᴛᴇ ʟɪɴᴋ ꜰᴏʀ ᴏɴᴇ ᴘᴏꜱᴛ  
 
-<b>⏳ Auto Delete</b>
-<code>/dlt_time</code> – <i>Set auto delete time</i>
-<code>/check_dlt_time</code> – <i>Check current delete time</i>
+<blockquote><b>📊 ʙᴏᴛ ꜱᴛᴀᴛɪꜱᴛɪᴄꜱ</b></blockquote>
 
-<b>🚫 User Control</b>
-<code>/ban</code> – <i>Ban a user</i>
-<code>/unban</code> – <i>Unban a user</i>
-<code>/banlist</code> – <i>List of banned users</i>
-<code>/delreq</code> – <i>Remove users left channel</i>
+<b>/users :</b> ᴠɪᴇᴡ ʙᴏᴛ ꜱᴛᴀᴛɪꜱᴛɪᴄꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/stats :</b> ᴄʜᴇᴄᴋ ʏᴏᴜʀ ʙᴏᴛ ᴜᴘᴛɪᴍᴇ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/count :</b> ᴄᴏᴜɴᴛ ꜱʜᴏʀᴛɴᴇʀ ᴄʟɪᴄᴋꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
 
-<b>📺 Force Subscribe</b>
-<code>/addchnl</code> – <i>Add force-sub channel</i>
-<code>/delchnl</code> – <i>Remove force-sub channel</i>
-<code>/listchnl</code> – <i>View added channels</i>
-<code>/fsub_mode</code> – <i>Toggle force-sub on/off</i>
+<blockquote><b>📢 ʙʀᴏᴀᴅᴄᴀꜱᴛ ᴄᴏᴍᴍᴀɴᴅꜱ</b></blockquote>
 
-<b>👮 Admin</b>
-<code>/add_admin</code> – <i>Add an admin</i>
-<code>/deladmin</code> – <i>Remove an admin</i>
-<code>/admins</code> – <i>List admins</i>
+<b>/broadcast :</b> ʙʀᴏᴀᴅᴄᴀꜱᴛ ᴀɴʏ ᴍᴇꜱꜱᴀɢᴇꜱ ᴛᴏ ʙᴏᴛ ᴜꜱᴇʀꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/dbroadcast :</b> ʙʀᴏᴀᴅᴄᴀꜱᴛ ᴀɴʏ ᴍᴇꜱꜱᴀɢᴇꜱ ᴡɪᴛʜ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/pbroadcast :</b> ᴘɪɴ ᴀ ʙʀᴏᴀᴅᴄᴀꜱᴛ ᴛᴏ ᴀʟʟ ᴜꜱᴇʀ'ꜱ ᴄʜᴀᴛ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
 
-<b>⭐ Premium</b>
-<code>/addpremium</code> – <i>Grant premium</i>
-<code>/premium_users</code> – <i>List premium users</i>
-<code>/remove_premium</code> – <i>Revoke premium</i>
+<blockquote><b>⏳ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ</b></blockquote>
+
+<b>/dlt_time :</b> ꜱᴇᴛ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ ꜰᴏʀ ꜰɪʟᴇꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/check_dlt_time :</b> ᴄʜᴇᴄᴋ ᴄᴜʀʀᴇɴᴛ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ ꜱᴇᴛᴛɪɴɢ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+
+<blockquote><b>🚫 ᴜꜱᴇʀ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ</b></blockquote>
+
+<b>/ban :</b> ʙᴀɴ ᴀ ᴜꜱᴇʀ ꜰʀᴏᴍ ᴜꜱɪɴɢ ᴛʜᴇ ʙᴏᴛ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/unban :</b> ᴜɴʙᴀɴ ᴀ ᴘʀᴇᴠɪᴏᴜꜱʟʏ ʙᴀɴɴᴇᴅ ᴜꜱᴇʀ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/banlist :</b> ɢᴇᴛ ʟɪꜱᴛ ᴏꜰ ʙᴀɴɴᴇᴅ ᴜꜱᴇʀꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/delreq :</b> ʀᴇᴍᴏᴠᴇ ᴜꜱᴇʀꜱ ᴛʜᴀᴛ ʟᴇꜰᴛ ᴄʜᴀɴɴᴇʟ ᴀɴᴅ ɴᴏᴛ ɢᴇᴛᴛɪɴɢ ʀᴇQᴜᴇꜱᴛ ꜰꜱᴜʙ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+
+<blockquote><b>📺 ꜰᴏʀᴄᴇ ꜱᴜʙꜱᴄʀɪʙᴇ</b></blockquote>
+
+<b>/addchnl :</b> ᴀᴅᴅ ᴀ ᴄʜᴀɴɴᴇʟ ꜰᴏʀ ꜰᴏʀᴄᴇ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/delchnl :</b> ʀᴇᴍᴏᴠᴇ ᴀ ꜰᴏʀᴄᴇ ꜱᴜʙꜱᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/listchnl :</b> ᴠɪᴇᴡ ᴀʟʟ ᴀᴅᴅᴇᴅ ꜰᴏʀᴄᴇ ꜱᴜʙꜱᴄʀɪʙᴇ ᴄʜᴀɴɴᴇʟꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/fsub_mode :</b> ᴛᴏɢɢʟᴇ ꜰᴏʀᴄᴇ ꜱᴜʙꜱᴄʀɪʙᴇ ᴏɴ ᴏʀ ᴏꜰꜰ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+
+<blockquote><b>👮 ᴀᴅᴍɪɴ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ</b></blockquote>
+
+<b>/add_admin :</b> ᴀᴅᴅ ᴀ ɴᴇᴡ ᴀᴅᴍɪɴ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/deladmin :</b> ʀᴇᴍᴏᴠᴇ ᴀɴ ᴀᴅᴍɪɴ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/admins :</b> ʟɪꜱᴛ ᴀʟʟ ᴄᴜʀʀᴇɴᴛ ᴀᴅᴍɪɴꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+
+<blockquote><b>⭐ ᴘʀᴇᴍɪᴜᴍ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ</b></blockquote>
+
+<b>/addpremium :</b> ɢʀᴀɴᴛ ᴘʀᴇᴍɪᴜᴍ ᴀᴄᴄᴇꜱꜱ ᴛᴏ ᴀ ᴜꜱᴇʀ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/premium_users :</b> ʟɪꜱᴛ ᴀʟʟ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀꜱ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
+<b>/remove_premium :</b> ʀᴇᴍᴏᴠᴇ ᴘʀᴇᴍɪᴜᴍ ꜰʀᴏᴍ ᴀ ᴜꜱᴇʀ (ᴀᴅᴍɪɴ ᴏɴʟʏ)  
 """
 #--------------------------------------------
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", "<b>• ʙʏ @spk_links</b>") #set your Custom Caption here, Keep None for Disable Custom Caption
