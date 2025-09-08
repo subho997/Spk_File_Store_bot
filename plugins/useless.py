@@ -21,26 +21,12 @@ from pyrogram.enums import ParseMode, ChatAction
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ReplyKeyboardMarkup, ChatInviteLink, ChatPrivileges
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, UserNotParticipant
-from functools import wraps
 from bot import Bot
-from config import USER_REPLY_TEXT, ADMINS
+from config import *
 from helper_func import *
 from database.database import *
 
 #=====================================================================================##
-
-def admin_only(func):
-    @wraps(func)
-    async def wrapper(bot, message, *args, **kwargs):
-        # If the user is not an admin
-        if message.from_user.id not in ADMINS:
-            # Reply with USER_REPLY_TEXT if it's set in config.py
-            if USER_REPLY_TEXT:
-                await message.reply(USER_REPLY_TEXT)
-            return
-        # Otherwise, run the actual command function
-        return await func(bot, message, *args, **kwargs)
-    return wrapper
 
 # Capture the bot start time
 START_TIME = time.time()
@@ -65,8 +51,7 @@ def get_readable_time(seconds: int) -> str:
 
 
 # Stats command
-@Bot.on_message(filters.command("stats")) 
-@admin_only
+@Bot.on_message(filters.command("stats") & admin) 
 async def stats(bot: Bot, message: Message):
     current_time = time.time()
     uptime = get_readable_time(int(current_time - START_TIME))
