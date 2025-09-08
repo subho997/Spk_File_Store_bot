@@ -23,7 +23,7 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, UserNotParticipant
 from functools import wraps
 from bot import Bot
-from config import USER_REPLY_TEXT
+from config import USER_REPLY_TEXT, ADMINS
 from helper_func import *
 from database.database import *
 
