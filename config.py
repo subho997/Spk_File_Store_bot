@@ -55,28 +55,43 @@ ABOUT_TXT = "<b><blockquote>◈ ᴄʀᴇᴀᴛᴏʀ: <a href=https://t.me/spk_li
 START_MSG = os.environ.get("START_MESSAGE", "<b>ʜᴇʟʟᴏ {mention}\n\n<blockquote> ɪ ᴀᴍ ғɪʟᴇ sᴛᴏʀᴇ ʙᴏᴛ, ɪ ᴄᴀɴ sᴛᴏʀᴇ ᴘʀɪᴠᴀᴛᴇ ғɪʟᴇs ɪɴ sᴘᴇᴄɪғɪᴇᴅ ᴄʜᴀɴɴᴇʟ ᴀɴᴅ ᴏᴛʜᴇʀ ᴜsᴇʀs ᴄᴀɴ ᴀᴄᴄᴇss ɪᴛ ғʀᴏᴍ sᴘᴇᴄɪᴀʟ ʟɪɴᴋ.</blockquote></b>")
 FORCE_MSG = os.environ.get("FORCE_SUB_MESSAGE", "ʜᴇʟʟᴏ {mention}\n\n<b><blockquote>ᴊᴏɪɴ ᴏᴜʀ ᴄʜᴀɴɴᴇʟs ᴀɴᴅ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ʀᴇʟᴏᴀᴅ button ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ʀᴇǫᴜᴇꜱᴛᴇᴅ ꜰɪʟᴇ.</b></blockquote>")
 
-CMD_TXT = """<blockquote><b>» ᴀᴅᴍɪɴ ᴄᴏᴍᴍᴀɴᴅs:</b></blockquote>
+CMD_TXT = """<blockquote><b>» ADMIN COMMANDS:</b></blockquote>
 
-<b>›› /dlt_time :</b> sᴇᴛ ᴀᴜᴛᴏ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ
-<b>›› /check_dlt_time :</b> ᴄʜᴇᴄᴋ ᴄᴜʀʀᴇɴᴛ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇ
-<b>›› /dbroadcast :</b> ʙʀᴏᴀᴅᴄᴀsᴛ ᴅᴏᴄᴜᴍᴇɴᴛ / ᴠɪᴅᴇᴏ
-<b>›› /ban :</b> ʙᴀɴ ᴀ ᴜꜱᴇʀ
-<b>›› /unban :</b> ᴜɴʙᴀɴ ᴀ ᴜꜱᴇʀ
-<b>›› /banlist :</b> ɢᴇᴛ ʟɪsᴛ ᴏꜰ ʙᴀɴɴᴇᴅ ᴜꜱᴇʀs
-<b>›› /addchnl :</b> ᴀᴅᴅ ꜰᴏʀᴄᴇ sᴜʙ ᴄʜᴀɴɴᴇʟ
-<b>›› /delchnl :</b> ʀᴇᴍᴏᴠᴇ ꜰᴏʀᴄᴇ sᴜʙ ᴄʜᴀɴɴᴇʟ
-<b>›› /listchnl :</b> ᴠɪᴇᴡ ᴀᴅᴅᴇᴅ ᴄʜᴀɴɴᴇʟs
-<b>›› /fsub_mode :</b> ᴛᴏɢɢʟᴇ ꜰᴏʀᴄᴇ sᴜʙ ᴍᴏᴅᴇ
-<b>›› /pbroadcast :</b> sᴇɴᴅ ᴘʜᴏᴛᴏ ᴛᴏ ᴀʟʟ ᴜꜱᴇʀs
-<b>›› /add_admin :</b> ᴀᴅᴅ ᴀɴ ᴀᴅᴍɪɴ
-<b>›› /deladmin :</b> ʀᴇᴍᴏᴠᴇ ᴀɴ ᴀᴅᴍɪɴ
-<b>›› /admins :</b> ɢᴇᴛ ʟɪsᴛ ᴏꜰ ᴀᴅᴍɪɴs
-<b>›› /addpremium :</b> ᴀᴅᴅ ᴀ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ
-<b>›› /premium_users :</b> ʟɪsᴛ ᴀʟʟ ᴘʀᴇᴍɪᴜᴍ ᴜꜱᴇʀs
-<b>›› /remove_premium :</b> ʀᴇᴍᴏᴠᴇ ᴘʀᴇᴍɪᴜᴍ ꜰʀᴏᴍ ᴀ ᴜꜱᴇʀ
-<b>›› /myplan :</b> ᴄʜᴇᴄᴋ ʏᴏᴜʀ ᴘʀᴇᴍɪᴜᴍ sᴛᴀᴛᴜs
-<b>›› /count :</b> ᴄᴏᴜɴᴛ ᴠᴇʀɪғɪᴄᴀᴛɪᴏɴs
-<b>›› /delreq :</b> Rᴇᴍᴏᴠᴇᴅ ʟᴇғᴛᴏᴠᴇʀ ɴᴏɴ-ʀᴇǫᴜᴇsᴛ ᴜsᴇʀs
+<blockquote><b>📊 Bot Statistics</b></blockquote>
+<b>/users :</b> VIEW BOT STATISTICS (ADMIN ONLY)
+<b>/stats :</b> CHECK YOUR BOT UPTIME (ADMIN ONLY)
+<b>/count :</b> COUNT SHORTNER CLICKS (ADMIN ONLY)
+
+<blockquote><b>📢 Broadcast Commands</b></blockquote>
+<b>/broadcast :</b> BROADCAST ANY MESSAGES TO BOT USERS (ADMIN ONLY)
+<b>/dbroadcast :</b> BROADCAST ANY MESSAGES WITH AUTO DELETE (ADMIN ONLY)
+<b>/pbroadcast :</b> PIN A BROADCAST TO ALL USER'S CHAT (ADMIN ONLY)
+
+<blockquote><b>⏳ Auto Delete</b></blockquote>
+<b>/dlt_time :</b> SET AUTO DELETE TIME FOR FILES (ADMIN ONLY)
+<b>/check_dlt_time :</b> CHECK CURRENT DELETE TIME SETTING (ADMIN ONLY)
+
+<blockquote><b>🚫 User Management</b></blockquote>
+<b>/ban :</b> BAN A USER FROM USING THE BOT (ADMIN ONLY)
+<b>/unban :</b> UNBAN A PREVIOUSLY BANNED USER (ADMIN ONLY)
+<b>/banlist :</b> GET LIST OF BANNED USERS (ADMIN ONLY)
+<b>/delreq :</b> REMOVE USERS THAT LEFT CHANNEL AND NOT GETTING REQUEST FSUB (ADMIN ONLY)
+
+<blockquote><b>📺 Force Subscribe</b></blockquote>
+<b>/addchnl :</b> ADD A CHANNEL FOR FORCE SUBSCRIPTION (ADMIN ONLY)
+<b>/delchnl :</b> REMOVE A FORCE SUBSCRIBE CHANNEL (ADMIN ONLY)
+<b>/listchnl :</b> VIEW ALL ADDED FORCE SUBSCRIBE CHANNELS (ADMIN ONLY)
+<b>/fsub_mode :</b> TOGGLE FORCE SUBSCRIBE ON OR OFF (ADMIN ONLY)
+
+<blockquote><b>👮 Admin Management</b></blockquote>
+<b>/add_admin :</b> ADD A NEW ADMIN (ADMIN ONLY)
+<b>/deladmin :</b> REMOVE AN ADMIN (ADMIN ONLY)
+<b>/admins :</b> LIST ALL CURRENT ADMINS (ADMIN ONLY)
+
+<blockquote><b>⭐ Premium Management</b></blockquote>
+<b>/addpremium :</b> GRANT PREMIUM ACCESS TO A USER (ADMIN ONLY)
+<b>/premium_users :</b> LIST ALL PREMIUM USERS (ADMIN ONLY)
+<b>/remove_premium :</b> REMOVE PREMIUM FROM A USER (ADMIN ONLY)
 """
 #--------------------------------------------
 CUSTOM_CAPTION = os.environ.get("CUSTOM_CAPTION", "<b>• ʙʏ @spk_links</b>") #set your Custom Caption here, Keep None for Disable Custom Caption
