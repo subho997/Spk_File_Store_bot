@@ -113,17 +113,6 @@ async def useless(_,message: Message):
     if USER_REPLY_TEXT:
         await message.reply(USER_REPLY_TEXT)
 
-from pyrogram import filters
-from pyrogram.types import Message
-
-ADMINS = {123456789, 987654321}  # আপনার/আপনাদের user_id দিন
-
-@Bot.on_message(filters.private & filters.incoming & ~filters.user(ADMINS))
-async def useless(_, message: Message):
-    # এটা কেবল নন-অ্যাডমিনদের জন্য চলবে
-    if USER_REPLY_TEXT:
-        await message.reply(USER_REPLY_TEXT)
-
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
 #
