@@ -103,19 +103,23 @@ async def set_delete_time(client: Bot, message: Message):
 @Bot.on_message(filters.private & filters.command('check_dlt_time') & admin)
 async def check_delete_time(client: Bot, message: Message):
     duration = await db.get_del_timer()
-
     await message.reply(f"<b><blockquote>Cᴜʀʀᴇɴᴛ ᴅᴇʟᴇᴛᴇ ᴛɪᴍᴇʀ ɪs sᴇᴛ ᴛᴏ {duration}sᴇᴄᴏɴᴅs.</blockquote></b>")
-@Bot.on_message(filters.command("stats"))
-async def stats_handler(_, message: Message):
-    # Check if user is NOT an admin
-    if message.from_user.id not in ADMINS:
-        # Send message only to non-admins
-        await message.reply("❌ Only admins can use this command.")
-        return
+
+
+
+# Custom filter to check non-admin users
+def non_admin_user(_, message):
+    return message.from_user.id not in ADMINS
+
+# Apply to all admin commands
+@Bot.on_message(filters.command("stats") & non_admin_user)
+async def restrict_non_admins(_, message: Message):
+    await message.reply("❌ Only admins can use admin commands.")
     
-    # If user is admin, handle the stats command properly
-    # Add your admin stats code here
-    await message.reply("📊 Here are your admin stats...")
+# Regular handler for admins
+@Bot.on_message(filters.command("stats") & filters.user(ADMINS))
+async def stats_handler(_, message: Message):
+    await message.reply("📊 Admin stats here...")
 
 #=====================================================================================##
 
