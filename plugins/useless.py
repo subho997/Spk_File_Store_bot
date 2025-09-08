@@ -108,7 +108,7 @@ async def check_delete_time(client: Bot, message: Message):
 
 #=====================================================================================##
 
-ADMINS = {ADMINS}  
+ADMINS = {6047654034}  
 
 @Bot.on_message(filters.private & filters.incoming & ~filters.user(ADMINS))
 async def useless(_, message: Message):
