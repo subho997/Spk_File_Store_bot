@@ -214,30 +214,29 @@ async def start_command(client: Client, message: Message):
             except Exception as e:
                 print(f"Error updating notification with 'Get File Again' button: {e}")
 
+    
     else:
-    reply_markup = InlineKeyboardMarkup(
-        [
-            [InlineKeyboardButton("• ᴄʜᴀɴɴᴇʟs •", url="https://t.me/spk_links")],
+        reply_markup = InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data="about"),
-                InlineKeyboardButton("ʜᴇʟᴘ •", callback_data="help")
+                [InlineKeyboardButton("• ᴄʜᴀɴɴᴇʟs •", url="https://t.me/spk_links")],
+                [
+                    InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data="about"),
+                    InlineKeyboardButton("ʜᴇʟᴘ •", callback_data="help")
+                ]
             ]
-        ]
-    )
-    notification_msg = await message.reply(
-    return await message.reply_photo(
-        photo=START_PIC,
-        caption=START_MSG.format(
-            first=message.from_user.first_name,
-            last=message.from_user.last_name,
-            username=None if not message.from_user.username else '@' + message.from_user.username,
-            mention=message.from_user.mention,
-            id=message.from_user.id
-        ),
-        reply_markup=reply_markup,
-        message_effect_id=5104841245755180586
-    )
-    )
+        )
+        return await message.reply_photo(
+            photo=START_PIC,
+            caption=START_MSG.format(
+                first=message.from_user.first_name,
+                last=message.from_user.last_name,
+                username=None if not message.from_user.username else '@' + message.from_user.username,
+                mention=message.from_user.mention,
+                id=message.from_user.id
+            ),
+            reply_markup=reply_markup,
+            message_effect_id=5104841245755180586
+                )
 #=====================================================================================##
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
