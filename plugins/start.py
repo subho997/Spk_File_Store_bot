@@ -142,7 +142,7 @@ async def start_command(client: Client, message: Message):
             print(f"Error getting messages: {e}")
             return
         finally:
-            await temp_msg.delete()
+            await temp.delete()
 
         codeflix_msgs = []
         for msg in messages:
@@ -164,8 +164,8 @@ async def start_command(client: Client, message: Message):
             except Exception as e:
                 print(f"Failed to send message: {e}")
                 pass
-
-             if FILE_AUTO_DELETE > 0:
+             
+                if FILE_AUTO_DELETE > 0:
                  await temp.delete()
                  notification_msg = await message.reply(
                    f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ {get_exp_time(FILE_AUTO_DELETE)}. "
@@ -209,8 +209,7 @@ async def start_command(client: Client, message: Message):
     ]
             ]
         )
-            return await temp.edit(
-            message.reply_photo(
+            return await message.reply_photo(
             photo=START_PIC,
             caption=START_MSG.format(
                 first=message.from_user.first_name,
@@ -221,8 +220,7 @@ async def start_command(client: Client, message: Message):
             ),
             reply_markup=reply_markup,
             message_effect_id=5104841245755180586)  # 🔥
-            )
-        return
+            
 
 
 #=====================================================================================##
