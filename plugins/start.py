@@ -224,7 +224,7 @@ async def start_command(client: Client, message: Message):
                 ]
             ]
         )
-      await temp.delete()
+      await temp.delete()    
       return await message.reply_photo(
     photo=START_PIC,
     caption=START_MSG.format(
