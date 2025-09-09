@@ -40,9 +40,6 @@ async def start_command(client: Client, message: Message):
     id = message.from_user.id
     is_premium = await is_premium_user(id)
 
-    # First temporary message
-    temp = await message.reply("⏳ Wait a sec...", quote=True)
-
     # Add user if not already present
     if not await db.present_user(user_id):
         try:
@@ -52,12 +49,13 @@ async def start_command(client: Client, message: Message):
 
     # ✅ Check Force Subscription
     if not await is_subscribed(client, user_id):
-        return await temp.edit("⚠️ Please join our channel to use the bot.")
+        #await temp.delete()
+        return await not_joined(client, message)
 
     # Check if user is banned
     banned_users = await db.get_ban_users()
     if user_id in banned_users:
-        return await temp.edit(
+        return await message.reply_text(
             "<b>⛔️ You are Bᴀɴɴᴇᴅ from using this bot.</b>\n\n"
             "<i>Contact support if you think this is a mistake.</i>",
             reply_markup=InlineKeyboardMarkup(
@@ -65,8 +63,9 @@ async def start_command(client: Client, message: Message):
             )
         )
 
-    # File auto-delete time
-    FILE_AUTO_DELETE = await db.get_del_timer()
+    # File auto-delete time in seconds (Set your desired time in seconds here)
+    FILE_AUTO_DELETE = await db.get_del_timer()             # Example: 3600 seconds (1 hour)
+
 
     text = message.text
     if len(text) > 7:
@@ -80,12 +79,12 @@ async def start_command(client: Client, message: Message):
             if "verify_" in message.text:
                 _, token = message.text.split("_", 1)
                 if verify_status['verify_token'] != token:
-                    return await temp.edit("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
+                    return await message.reply("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
 
                 await db.update_verify_status(id, is_verified=True, verified_time=time.time())
                 current = await db.get_verify_count(id)
                 await db.set_verify_count(id, current + 1)
-                return await temp.edit(
+                return await message.reply(
                     f"✅ 𝗧𝗼𝗸𝗲𝗻 𝘃𝗲𝗿𝗶𝗳𝗶𝗲𝗱! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
                 )
 
@@ -98,7 +97,7 @@ async def start_command(client: Client, message: Message):
                      InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
                     [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
-                return await temp.edit(
+                return await message.reply(
                   f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
                   f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
                   f"🔍 <b>What is the token??</b>\n\n"
@@ -107,11 +106,10 @@ async def start_command(client: Client, message: Message):
                          reply_markup=InlineKeyboardMarkup(btn)
                 )  
 
-        # Decode part
         try:
             base64_string = text.split(" ", 1)[1]
         except IndexError:
-            return await temp.edit("⚠️ Invalid start parameter.")
+            return
 
         string = await decode(base64_string)
         argument = string.split("-")
@@ -124,21 +122,24 @@ async def start_command(client: Client, message: Message):
                 ids = range(start, end + 1) if start <= end else list(range(start, end - 1, -1))
             except Exception as e:
                 print(f"Error decoding IDs: {e}")
-                return await temp.edit("⚠️ Error decoding IDs.")
+                return
 
         elif len(argument) == 2:
             try:
                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
             except Exception as e:
                 print(f"Error decoding ID: {e}")
-                return await temp.edit("⚠️ Error decoding ID.")
+                return
 
-        await temp.edit("<b>Please wait...</b>")
+        temp_msg = await message.reply("<b>Please wait...</b>")
         try:
             messages = await get_messages(client, ids)
         except Exception as e:
+            await message.reply_text("Something went wrong!")
             print(f"Error getting messages: {e}")
-            return await temp.edit("❌ Something went wrong!")
+            return
+        finally:
+            await temp_msg.delete()
 
         codeflix_msgs = []
         for msg in messages:
@@ -162,9 +163,8 @@ async def start_command(client: Client, message: Message):
                 pass
 
         if FILE_AUTO_DELETE > 0:
-            await temp.delete(
-                f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ  {get_exp_time(FILE_AUTO_DELETE)}. "
-                f"Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
+            notification_msg = await message.reply(
+                f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ  {get_exp_time(FILE_AUTO_DELETE)}. Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
             )
 
             await asyncio.sleep(FILE_AUTO_DELETE)
@@ -186,31 +186,23 @@ async def start_command(client: Client, message: Message):
                     [[InlineKeyboardButton("ɢᴇᴛ ғɪʟᴇ ᴀɢᴀɪɴ!", url=reload_url)]]
                 ) if reload_url else None
 
-                await temp.edit(
-                    "<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\n"
-                    "ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",
+                await notification_msg.edit(
+                    "<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",
                     reply_markup=keyboard
                 )
             except Exception as e:
                 print(f"Error updating notification with 'Get File Again' button: {e}")
     else:
-        return await temp.edit(
-            START_MSG.format(
-                first=message.from_user.first_name,
-                last=message.from_user.last_name,
-                username=None if not message.from_user.username else '@' + message.from_user.username,
-                mention=message.from_user.mention,
-                id=message.from_user.id
-            ),
-            reply_markup=InlineKeyboardMarkup(
-                [
+        reply_markup = InlineKeyboardMarkup(
+            [
                     [InlineKeyboardButton("• ᴄʜᴀɴɴᴇʟs •", url="https://t.me/spk_links")],
-                    [
-                        InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data="about"),
-                        InlineKeyboardButton("ʜᴇʟᴘ •", callback_data="help")
-                    ]
-                ]
-            )
+
+    [
+                    InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data = "about"),
+                    InlineKeyboardButton('ʜᴇʟᴘ •', callback_data = "help")
+
+    ]
+            ]
         )
         await message.reply_photo(
             photo=START_PIC,
