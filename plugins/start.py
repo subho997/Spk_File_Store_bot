@@ -40,6 +40,9 @@ async def start_command(client: Client, message: Message):
     id = message.from_user.id
     is_premium = await is_premium_user(id)
 
+   # First temporary message
+    temp = await message.reply("⏳ Wait a sec...", quote=True)
+    
     # Add user if not already present
     if not await db.present_user(user_id):
         try:
@@ -55,7 +58,7 @@ async def start_command(client: Client, message: Message):
     # Check if user is banned
     banned_users = await db.get_ban_users()
     if user_id in banned_users:
-        return await message.reply_text(
+        return await temp.edit(
             "<b>⛔️ You are Bᴀɴɴᴇᴅ from using this bot.</b>\n\n"
             "<i>Contact support if you think this is a mistake.</i>",
             reply_markup=InlineKeyboardMarkup(
@@ -79,12 +82,12 @@ async def start_command(client: Client, message: Message):
             if "verify_" in message.text:
                 _, token = message.text.split("_", 1)
                 if verify_status['verify_token'] != token:
-                    return await message.reply("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
+                    return await temp.edit("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
 
                 await db.update_verify_status(id, is_verified=True, verified_time=time.time())
                 current = await db.get_verify_count(id)
                 await db.set_verify_count(id, current + 1)
-                return await message.reply(
+                return await temp.edit(
                     f"✅ 𝗧𝗼𝗸𝗲𝗻 𝘃𝗲𝗿𝗶𝗳𝗶𝗲𝗱! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
                 )
 
@@ -97,7 +100,7 @@ async def start_command(client: Client, message: Message):
                      InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
                     [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
-                return await message.reply(
+                return await temp.edit(
                   f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
                   f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
                   f"🔍 <b>What is the token??</b>\n\n"
