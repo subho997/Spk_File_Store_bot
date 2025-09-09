@@ -224,13 +224,7 @@ async def start_command(client: Client, message: Message):
             ]
         ]
     )
-
-    # ✅ temp message delete korte hobe ekhane
-    try:
-        await temp.delete()
-    except Exception as e:
-        print(f"Temp delete error: {e}")
-
+    notification_msg = await message.reply(
     return await message.reply_photo(
         photo=START_PIC,
         caption=START_MSG.format(
@@ -243,7 +237,7 @@ async def start_command(client: Client, message: Message):
         reply_markup=reply_markup,
         message_effect_id=5104841245755180586
     )
-
+    )
 #=====================================================================================##
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
