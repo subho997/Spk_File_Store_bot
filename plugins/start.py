@@ -109,10 +109,11 @@ async def start_command(client: Client, message: Message):
                          reply_markup=InlineKeyboardMarkup(btn)
                 )  
 
+        # Decode part
         try:
             base64_string = text.split(" ", 1)[1]
         except IndexError:
-            return
+            return await temp.edit("⚠️ Invalid start parameter.")
 
         string = await decode(base64_string)
         argument = string.split("-")
@@ -125,20 +126,19 @@ async def start_command(client: Client, message: Message):
                 ids = range(start, end + 1) if start <= end else list(range(start, end - 1, -1))
             except Exception as e:
                 print(f"Error decoding IDs: {e}")
-                return
+                return await temp.edit("⚠️ Error decoding IDs.")
 
         elif len(argument) == 2:
             try:
                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
             except Exception as e:
                 print(f"Error decoding ID: {e}")
-                return
+                return await temp.edit("⚠️ Error decoding ID.")
 
-        temp_msg = await message.reply("<b>Please wait...</b>")
         try:
             messages = await get_messages(client, ids)
         except Exception as e:
-            await message.reply_text("Something went wrong!")
+            await temp.edit("❌ Something went wrong!")
             print(f"Error getting messages: {e}")
             return
         finally:
@@ -165,10 +165,12 @@ async def start_command(client: Client, message: Message):
                 print(f"Failed to send message: {e}")
                 pass
 
-        if FILE_AUTO_DELETE > 0:
-            notification_msg = await message.reply(
-                f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ  {get_exp_time(FILE_AUTO_DELETE)}. Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
-            )
+             if FILE_AUTO_DELETE > 0:
+                 await temp.delete()
+                 notification_msg = await message.reply(
+                   f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ {get_exp_time(FILE_AUTO_DELETE)}. "
+                   f"Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
+                  )
 
             await asyncio.sleep(FILE_AUTO_DELETE)
 
