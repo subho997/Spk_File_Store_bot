@@ -40,7 +40,7 @@ async def start_command(client: Client, message: Message):
     id = message.from_user.id
     is_premium = await is_premium_user(id)
 
-   # First temporary message
+    # First temporary message
     temp = await message.reply("⏳ Wait a sec...", quote=True)
     
     # Add user if not already present
@@ -52,7 +52,6 @@ async def start_command(client: Client, message: Message):
 
     # ✅ Check Force Subscription
     if not await is_subscribed(client, user_id):
-        #await temp.delete()
         return await not_joined(client, message)
 
     # Check if user is banned
@@ -66,9 +65,8 @@ async def start_command(client: Client, message: Message):
             )
         )
 
-    # File auto-delete time in seconds (Set your desired time in seconds here)
-    FILE_AUTO_DELETE = await db.get_del_timer()             # Example: 3600 seconds (1 hour)
-
+    # File auto-delete time in seconds
+    FILE_AUTO_DELETE = await db.get_del_timer()
 
     text = message.text
     if len(text) > 7:
@@ -82,31 +80,35 @@ async def start_command(client: Client, message: Message):
             if "verify_" in message.text:
                 _, token = message.text.split("_", 1)
                 if verify_status['verify_token'] != token:
-                    return await temp.edit("⚠️ 𝖨𝗇𝗏𝖺𝗅𝗂𝖽 𝗍𝗈𝗄𝖾𝗇. 𝖯𝗅𝖾𝖺𝗌𝖾 /start 𝖺𝗀𝖺𝗂𝗇.")
+                    return await temp.edit("⚠️ Invalid token. Please /start again.")
 
                 await db.update_verify_status(id, is_verified=True, verified_time=time.time())
                 current = await db.get_verify_count(id)
                 await db.set_verify_count(id, current + 1)
                 return await temp.edit(
-                    f"✅ 𝗧𝗼𝗸𝗲𝗻 𝘃𝗲𝗿𝗶𝗳𝗶𝗲𝗱! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
+                    f"✅ Token verified! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
                 )
 
             if not verify_status['is_verified'] and not is_premium:
                 token = ''.join(random.choices(rohit.ascii_letters + rohit.digits, k=10))
                 await db.update_verify_status(id, verify_token=token, link="")
-                link = await get_shortlink(SHORTLINK_URL, SHORTLINK_API, f'https://telegram.dog/{client.username}?start=verify_{token}')
+                link = await get_shortlink(
+                    SHORTLINK_URL, SHORTLINK_API,
+                    f'https://telegram.dog/{client.username}?start=verify_{token}'
+                )
                 btn = [
                     [InlineKeyboardButton("• ᴏᴘᴇɴ ʟɪɴᴋ •", url=link),
                      InlineKeyboardButton("• ᴛᴜᴛᴏʀɪᴀʟ •", url=TUT_VID)],
                     [InlineKeyboardButton("• ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
                 return await temp.edit(
-                  f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
-                  f"⚡ <b>Verification takes less than 30 seconds!</b>\n\n"
-                  f"🔍 <b>What is the token??</b>\n\n"
-                  f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for <b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
-                  f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
-                         reply_markup=InlineKeyboardMarkup(btn)
+                    f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
+                    f"⚡ Verification takes less than 30 seconds!\n\n"
+                    f"🔍 <b>What is the token??</b>\n\n"
+                    f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for "
+                    f"<b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
+                    f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
+                    reply_markup=InlineKeyboardMarkup(btn)
                 )  
 
         # Decode part
@@ -127,7 +129,6 @@ async def start_command(client: Client, message: Message):
             except Exception as e:
                 print(f"Error decoding IDs: {e}")
                 return await temp.edit("⚠️ Error decoding IDs.")
-
         elif len(argument) == 2:
             try:
                 ids = [int(int(argument[1]) / abs(client.db_channel.id))]
@@ -146,31 +147,45 @@ async def start_command(client: Client, message: Message):
 
         codeflix_msgs = []
         for msg in messages:
-            caption = (CUSTOM_CAPTION.format(previouscaption="" if not msg.caption else msg.caption.html, 
-                                             filename=msg.document.file_name) if bool(CUSTOM_CAPTION) and bool(msg.document)
-                       else ("" if not msg.caption else msg.caption.html))
+            caption = (
+                CUSTOM_CAPTION.format(
+                    previouscaption="" if not msg.caption else msg.caption.html,
+                    filename=msg.document.file_name
+                ) if bool(CUSTOM_CAPTION) and bool(msg.document)
+                else ("" if not msg.caption else msg.caption.html)
+            )
 
             reply_markup = msg.reply_markup if DISABLE_CHANNEL_BUTTON else None
 
             try:
-                copied_msg = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, 
-                                            reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                copied_msg = await msg.copy(
+                    chat_id=message.from_user.id,
+                    caption=caption,
+                    parse_mode=ParseMode.HTML,
+                    reply_markup=reply_markup,
+                    protect_content=PROTECT_CONTENT
+                )
                 codeflix_msgs.append(copied_msg)
             except FloodWait as e:
                 await asyncio.sleep(e.x)
-                copied_msg = await msg.copy(chat_id=message.from_user.id, caption=caption, parse_mode=ParseMode.HTML, 
-                                            reply_markup=reply_markup, protect_content=PROTECT_CONTENT)
+                copied_msg = await msg.copy(
+                    chat_id=message.from_user.id,
+                    caption=caption,
+                    parse_mode=ParseMode.HTML,
+                    reply_markup=reply_markup,
+                    protect_content=PROTECT_CONTENT
+                )
                 codeflix_msgs.append(copied_msg)
             except Exception as e:
                 print(f"Failed to send message: {e}")
                 pass
-             
-                if FILE_AUTO_DELETE > 0:
-                 await temp.delete()
-                 notification_msg = await message.reply(
-                   f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ {get_exp_time(FILE_AUTO_DELETE)}. "
-                   f"Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
-                  )
+
+        # ✅ File auto-delete
+        if FILE_AUTO_DELETE > 0:
+            notification_msg = await message.reply(
+                f"<b>Tʜɪs Fɪʟᴇ ᴡɪʟʟ ʙᴇ Dᴇʟᴇᴛᴇᴅ ɪɴ {get_exp_time(FILE_AUTO_DELETE)}. "
+                f"Pʟᴇᴀsᴇ sᴀᴠᴇ ᴏʀ ғᴏʀᴡᴀʀᴅ ɪᴛ ᴛᴏ ʏᴏᴜʀ sᴀᴠᴇᴅ ᴍᴇssᴀɢᴇs ʙᴇғᴏʀᴇ ɪᴛ ɢᴇᴛs Dᴇʟᴇᴛᴇᴅ.</b>"
+            )
 
             await asyncio.sleep(FILE_AUTO_DELETE)
 
@@ -191,25 +206,25 @@ async def start_command(client: Client, message: Message):
                     [[InlineKeyboardButton("ɢᴇᴛ ғɪʟᴇ ᴀɢᴀɪɴ!", url=reload_url)]]
                 ) if reload_url else None
 
-                await temp.edit(
-                    "<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\nᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",
+                await notification_msg.edit(
+                    "<b>ʏᴏᴜʀ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ ɪꜱ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ ᴅᴇʟᴇᴛᴇᴅ !!\n\n"
+                    "ᴄʟɪᴄᴋ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ʏᴏᴜʀ ᴅᴇʟᴇᴛᴇᴅ ᴠɪᴅᴇᴏ / ꜰɪʟᴇ 👇</b>",
                     reply_markup=keyboard
                 )
             except Exception as e:
                 print(f"Error updating notification with 'Get File Again' button: {e}")
+
     else:
         reply_markup = InlineKeyboardMarkup(
             [
-                    [InlineKeyboardButton("• ᴄʜᴀɴɴᴇʟs •", url="https://t.me/spk_links")],
-
-    [
-                    InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data = "about"),
-                    InlineKeyboardButton('ʜᴇʟᴘ •', callback_data = "help")
-
-    ]
+                [InlineKeyboardButton("• ᴄʜᴀɴɴᴇʟs •", url="https://t.me/spk_links")],
+                [
+                    InlineKeyboardButton("• ᴀʙᴏᴜᴛ", callback_data="about"),
+                    InlineKeyboardButton("ʜᴇʟᴘ •", callback_data="help")
+                ]
             ]
         )
-            return await message.reply_photo(
+        return await message.reply_photo(
             photo=START_PIC,
             caption=START_MSG.format(
                 first=message.from_user.first_name,
@@ -219,9 +234,8 @@ async def start_command(client: Client, message: Message):
                 id=message.from_user.id
             ),
             reply_markup=reply_markup,
-            message_effect_id=5104841245755180586)  # 🔥
-            
-
+            message_effect_id=5104841245755180586
+                )
 
 #=====================================================================================##
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
