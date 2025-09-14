@@ -231,7 +231,6 @@ if 'temp' in locals():
     except:
         pass
 
-# শুধু /start দিলে ওয়েলকাম মেসেজ পাঠাবে
 if len(text) <= 7:          
     return await message.reply_photo(
         photo=START_PIC,
