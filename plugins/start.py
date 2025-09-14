@@ -230,7 +230,7 @@ async def start_command(client: Client, message: Message):
             await temp.delete()
         except:
             pass
-    if len(text) > 7:          
+if len(text) > 7:          
     return await message.reply_photo(
             photo=START_PIC,
             caption=START_MSG.format(
