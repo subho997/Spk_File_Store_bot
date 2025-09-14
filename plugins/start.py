@@ -103,7 +103,7 @@ async def start_command(client: Client, message: Message):
                 ]
                 return await temp.edit(
                     f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
-                    f"⚡ Verification takes less than 2 minutes\n\n"
+                    f"⚡ Verification takes less than 30 seconds!\n\n"
                     f"🔍 <b>What is the token??</b>\n\n"
                     f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for "
                     f"<b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
