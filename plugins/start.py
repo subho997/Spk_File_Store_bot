@@ -213,6 +213,8 @@ async def start_command(client: Client, message: Message):
                 )
             except Exception as e:
                 print(f"Error updating notification with 'Get File Again' button: {e}")
+       
+        return      
     else:
         reply_markup = InlineKeyboardMarkup(
             [
