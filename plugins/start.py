@@ -98,7 +98,7 @@ async def start_command(client: Client, message: Message):
                 )
                 btn = [
                     [InlineKeyboardButton("• ⚡ ᴠᴇʀɪꜰʏ ᴛᴏᴋᴇɴ •", url=link),
-                     InlineKeyboardButton("• ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ❓ •", url=TUT_VID)],
+                     InlineKeyboardButton("•  ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ❓•", url=TUT_VID)],
                     [InlineKeyboardButton("• 💰 ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
                 ]
                 return await temp.edit(
