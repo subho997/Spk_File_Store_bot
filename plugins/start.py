@@ -58,7 +58,7 @@ async def start_command(client: Client, message: Message):
     banned_users = await db.get_ban_users()
     if user_id in banned_users:
         return await temp.edit(
-            "<b>⛔️ You are Bᴀɴɴᴇᴅ from using this bot.</b>\n\n"
+            "<b>⛔️ You are Banned from using this bot.</b>\n\n"
             "<i>Contact support if you think this is a mistake.</i>",
             reply_markup=InlineKeyboardMarkup(
                 [[InlineKeyboardButton("Contact Support", url=BAN_SUPPORT)]]
@@ -69,16 +69,11 @@ async def start_command(client: Client, message: Message):
     FILE_AUTO_DELETE = await db.get_del_timer()
 
     text = message.text
-if len(text) > 7:
-    # Token verification 
-    verify_status = await db.get_verify_status(id)
-    # ✅ Check Verify Mode before verification process
-    if VERIFY_MODE == True:
-        print("🔒 Verify Mode is ON — token verification required.")
-    # Add a pass statement to avoid empty block issue
-    pass  
-else:
-        if SHORTLINK_URL or SHORTLINK_API:
+    if len(text) > 7:
+        # Token verification - ONLY if VERIFY_MODE is True
+        verify_status = await db.get_verify_status(id)
+
+        if VERIFY_MODE and (SHORTLINK_URL and SHORTLINK_API):
             if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
                 await db.update_verify_status(user_id, is_verified=False)
 
@@ -91,7 +86,7 @@ else:
                 current = await db.get_verify_count(id)
                 await db.set_verify_count(id, current + 1)
                 return await temp.edit(
-                    f"✅ Token verified! Vᴀʟɪᴅ ғᴏʀ {get_exp_time(VERIFY_EXPIRE)}"
+                    f"✅ Token verified! Valid for {get_exp_time(VERIFY_EXPIRE)}"
                 )
 
             if not verify_status['is_verified'] and not is_premium:
@@ -102,19 +97,22 @@ else:
                     f'https://telegram.dog/{client.username}?start=verify_{token}'
                 )
                 btn = [
-                    [InlineKeyboardButton("• ⚡ ᴠᴇʀɪꜰʏ ᴛᴏᴋᴇɴ •", url=link),
-                     InlineKeyboardButton("•  ʜᴏᴡ ᴛᴏ ᴠᴇʀɪꜰʏ ❓•", url=TUT_VID)],
-                    [InlineKeyboardButton("• 💰 ʙᴜʏ ᴘʀᴇᴍɪᴜᴍ •", callback_data="premium")]
+                    [InlineKeyboardButton("• ⚡ Verify Token •", url=link),
+                     InlineKeyboardButton("• How to Verify ❓•", url=TUT_VID)],
+                    [InlineKeyboardButton("• 💰 Buy Premium •", callback_data="premium")]
                 ]
                 return await temp.edit(
-                    f"⚠️ <b>Your token has expired. Please refresh your token to continue..</b>\n\n"
+                    f"⚠️ <b>Token verification required</b>\n\n"
                     f"⚡ Verification takes less than 2 minutes\n\n"
-                    f"🔍 <b>What is the token??</b>\n\n"
+                    f"🔍 <b>What is token verification?</b>\n\n"
                     f"📝 This is an <b>Ads Token</b>. Passing one ad allows you to use the bot for "
                     f"<b>{get_exp_time(VERIFY_EXPIRE)}</b>\n\n"
                     f"⏳ <b>Token Timeout:</b> {get_exp_time(VERIFY_EXPIRE)}",
                     reply_markup=InlineKeyboardMarkup(btn)
                 )  
+
+        # Rest of your file sending code...
+        # ... [existing file sending logic]
 
         # Decode part
         try:
