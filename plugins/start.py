@@ -72,7 +72,11 @@ async def start_command(client: Client, message: Message):
     if len(text) > 7:
         # Token verification 
         verify_status = await db.get_verify_status(id)
-
+        # ✅ Check Verify Mode before verification process
+        if not VERIFY_MODE:
+    # Verification disabled
+    print("🔓 Verify Mode is OFF — skipping token verification.")
+    else:
         if SHORTLINK_URL or SHORTLINK_API:
             if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
                 await db.update_verify_status(user_id, is_verified=False)
