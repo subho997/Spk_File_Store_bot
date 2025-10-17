@@ -69,13 +69,15 @@ async def start_command(client: Client, message: Message):
     FILE_AUTO_DELETE = await db.get_del_timer()
 
     text = message.text
-    if len(text) > 7:
-        # Token verification 
-        verify_status = await db.get_verify_status(id)
-        # ✅ Check Verify Mode before verification process
-        if VERIFY_MODE == True:
-            print("🔒 Verify Mode is ON — token verification required.")
-    else:
+if len(text) > 7:
+    # Token verification 
+    verify_status = await db.get_verify_status(id)
+    # ✅ Check Verify Mode before verification process
+    if VERIFY_MODE == True:
+        print("🔒 Verify Mode is ON — token verification required.")
+    # Add a pass statement to avoid empty block issue
+    pass  
+else:
         if SHORTLINK_URL or SHORTLINK_API:
             if verify_status['is_verified'] and VERIFY_EXPIRE < (time.time() - verify_status['verified_time']):
                 await db.update_verify_status(user_id, is_verified=False)
