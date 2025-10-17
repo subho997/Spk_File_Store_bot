@@ -41,7 +41,7 @@ FORCE_PIC = os.environ.get("FORCE_PIC", "https://telegra.ph/file/e292b12890b8b4b
 
 #--------------------------------------------
 # Enable or Disable Verify Mode
-VERIFY_MODE   = os.environ.get("VERIFY_MODE", "False")  # True = verification on | False = verification off
+VERIFY_MODE = Flase # True = verification on | False = verification off
 SHORTLINK_URL = os.environ.get("SHORTLINK_URL", "")
 SHORTLINK_API = os.environ.get("SHORTLINK_API", "")
 VERIFY_EXPIRE = int(os.environ.get('VERIFY_EXPIRE', 21600)) # Add time in seconds
