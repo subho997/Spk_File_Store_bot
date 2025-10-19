@@ -23,7 +23,7 @@ from config import STREAM_MODE, URL, WEBSITE_URL_MODE, WEBSITE_URL
 from datetime import datetime, timedelta
 from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode, ChatAction
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ReplyKeyboardMarkup, ChatInviteLink, ChatPrivileges
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery, ReplyKeyboardMarkup, ChatInviteLink, ChatPrivileges, WebAppInfo
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated, UserNotParticipant
 from bot import Bot
@@ -114,8 +114,6 @@ async def start_command(client: Client, message: Message):
                 )  
 
         # Rest of your file sending code...
-        # ... [existing file sending logic]
-
         # Decode part
         try:
             base64_string = text.split(" ", 1)[1]
@@ -162,35 +160,35 @@ async def start_command(client: Client, message: Message):
 
             reply_markup = msg.reply_markup if DISABLE_CHANNEL_BUTTON else None
 
-              # ✅ STREAM_MODE বাটন যোগ করুন (এই অংশটা যোগ করুন)
-    stream_buttons = None
-    if STREAM_MODE and (msg.video or msg.document):
-        try:
-            from utils.file_properties import get_name, get_hash
-            file_name = get_name(msg)
-            file_hash = get_hash(msg)
+            # ✅ STREAM_MODE বাটন যোগ করুন
+            stream_buttons = None
+            if STREAM_MODE and (msg.video or msg.document):
+                try:
+                    from utils.file_properties import get_name, get_hash
+                    file_name = get_name(msg)
+                    file_hash = get_hash(msg)
+                    
+                    if file_name and file_hash:
+                        stream_url = f"{URL}watch/{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                        download_url = f"{URL}{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                        
+                        stream_buttons = [
+                            [InlineKeyboardButton("📥 Download", url=download_url), 
+                             InlineKeyboardButton("🎥 Watch", url=stream_url)],
+                            [InlineKeyboardButton("🌐 Web Player", web_app=WebAppInfo(url=stream_url))]
+                        ]
+                except Exception as e:
+                    print(f"Stream button error: {e}")
             
-            if file_name and file_hash:
-                stream_url = f"{URL}watch/{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
-                download_url = f"{URL}{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
-                
-                stream_buttons = [
-                    [InlineKeyboardButton("📥 Download", url=download_url), 
-                     InlineKeyboardButton("🎥 Watch", url=stream_url)],
-                    [InlineKeyboardButton("🌐 Web Player", web_app=WebAppInfo(url=stream_url))]
-                ]
-        except Exception as e:
-            print(f"Stream button error: {e}")
-    
-    # যদি stream buttons থাকে তাহলে সেটা ব্যবহার করুন, নাহলে existing reply_markup
-    final_reply_markup = InlineKeyboardMarkup(stream_buttons) if stream_buttons else reply_markup
-    
+            # যদি stream buttons থাকে তাহলে সেটা ব্যবহার করুন, নাহলে existing reply_markup
+            final_reply_markup = InlineKeyboardMarkup(stream_buttons) if stream_buttons else reply_markup
+            
             try:
                 copied_msg = await msg.copy(
                     chat_id=message.from_user.id,
                     caption=caption,
                     parse_mode=ParseMode.HTML,
-                    reply_markup=reply_markup,
+                    reply_markup=final_reply_markup,
                     protect_content=PROTECT_CONTENT
                 )
                 codeflix_msgs.append(copied_msg)
@@ -200,7 +198,7 @@ async def start_command(client: Client, message: Message):
                     chat_id=message.from_user.id,
                     caption=caption,
                     parse_mode=ParseMode.HTML,
-                    reply_markup=reply_markup,
+                    reply_markup=final_reply_markup,
                     protect_content=PROTECT_CONTENT
                 )
                 codeflix_msgs.append(copied_msg)
@@ -262,22 +260,21 @@ async def start_command(client: Client, message: Message):
             pass
             
     return await message.reply_photo(
-            photo=START_PIC,
-            caption=START_MSG.format(
-                first=message.from_user.first_name,
-                last=message.from_user.last_name,
-                username=None if not message.from_user.username else '@' + message.from_user.username,
-                mention=message.from_user.mention,
-                id=message.from_user.id
-            ),
-            reply_markup=reply_markup,
-            message_effect_id=5104841245755180586
-                )
+        photo=START_PIC,
+        caption=START_MSG.format(
+            first=message.from_user.first_name,
+            last=message.from_user.last_name,
+            username=None if not message.from_user.username else '@' + message.from_user.username,
+            mention=message.from_user.mention,
+            id=message.from_user.id
+        ),
+        reply_markup=reply_markup,
+        message_effect_id=5104841245755180586
+    )
+
 #=====================================================================================##
 # Don't Remove Credit @CodeFlix_Bots, @rohit_1888
 # Ask Doubt on telegram @CodeflixSupport
-
-
 
 # Create a global dictionary to store chat data
 chat_data_cache = {}
@@ -447,6 +444,7 @@ async def pre_remove_user(client: Client, msg: Message):
 @Bot.on_message(filters.command('premium_users') & filters.private & admin)
 async def list_premium_users_command(client, message):
     # Define IST timezone
+    from pytz import timezone
     ist = timezone("Asia/Kolkata")
 
     # Retrieve all users from the collection
@@ -502,7 +500,7 @@ async def list_premium_users_command(client, message):
     if len(premium_user_list) == 1:  # No active users found
         await message.reply_text("I found 0 active premium users in my DB")
     else:
-        await message.reply_text("\n\n".join(premium_user_list), parse_mode=None)
+           await message.reply_text("\n\n".join(premium_user_list), parse_mode=None)
 
 
 #=====================================================================================##
