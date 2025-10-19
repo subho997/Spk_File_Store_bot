@@ -1,5 +1,6 @@
 #(©)Codexbotz
-
+from config import STREAM_MODE, URL, WEBSITE_URL_MODE, WEBSITE_URL
+from urllib.parse import quote_plus
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from bot import Bot
@@ -36,10 +37,31 @@ async def batch(client: Client, message: Message):
 
     string = f"get-{f_msg_id * abs(client.db_channel.id)}-{s_msg_id * abs(client.db_channel.id)}"
     base64_string = await encode(string)
-    link = f"https://t.me/{client.username}?start={base64_string}"
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
+    # ✅ WEBSITE_URL_MODE যোগ করুন
+    if WEBSITE_URL_MODE:
+        link = f"{WEBSITE_URL}?batch={base64_string}"
+    else:
+        link = f"https://t.me/{client.username}?start={base64_string}"
+    
+    # ✅ STREAM_MODE এর জন্য বাটন তৈরি করুন
+    buttons = []
+    if STREAM_MODE:
+        try:
+            from utils.file_properties import get_name, get_hash
+            # প্রথম মেসেজ থেকে স্ট্রিম লিঙ্ক তৈরি করুন
+            first_msg = await client.get_messages(client.db_channel.id, f_msg_id)
+            if first_msg.video or first_msg.document:
+                file_name = get_name(first_msg)
+                file_hash = get_hash(first_msg)
+                stream_url = f"{URL}watch/{first_msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                buttons.append([InlineKeyboardButton("🎥 Preview Stream", url=stream_url)])
+        except Exception as e:
+            print(f"Stream button error: {e}")
+    
+    buttons.append([InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')])
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
     await second_message.reply_text(f"<b>Here is your link</b>\n\n{link}", quote=True, reply_markup=reply_markup)
-
 
 @Bot.on_message(filters.private & admin & filters.command('genlink'))
 async def link_generator(client: Client, message: Message):
