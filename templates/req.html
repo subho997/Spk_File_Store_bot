@@ -1,0 +1,283 @@
+<!-- this code is written by @biisal tg:biisal-files modified by TechifyBots -->
+<!-- stealing credit doesn't make you developer..so try to give full credit to the developer 😊 u will not loose anything for giving proper credit.  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPK STREAM | {{file_name}}</title>
+    <link rel="stylesheet" href="https://unpkg.com/sheryjs/dist/Shery.css" />
+    <link rel="stylesheet" href="https://biisal.github.io/Resources/StreamCSS.css">
+    <link rel="stylesheet" href="https://biisal.github.io/Resources/playerCss.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    <nav>
+        <div class="nleft">
+            <a href="https://t.me/spklink">
+                <!-- if u are trying to change the header name please remove the title text from bottom line  -->
+                <h3 id="heading" style="z-index: 100;" class="magnet">SPK STREAM</h3>
+            </a>
+        </div>
+        <div class="nryt">
+            <a class="home-btn magnet" href="#main" onclick="toggleWidthnav(this)">HOME</a>
+
+            <a href="#sec1" class="about-btn magnet" onclick="toggleWidthnav(this)">ABOUT</a>
+        </div>
+    </nav>
+    <center>
+        <div class="about-nav">
+            <a href="#sec1" class="wlcm magnet" onclick="toggleWidth(this)">WELCOME</a>
+            <a href="#sec2" class="abt-chnl magnet" onclick="toggleWidth(this)">FOLLOW</a>
+            <a href="#sec3" class="magnet bot-btn" onclick="toggleWidth(this) , bot_btn_clicked()">CHANNELS</a>
+            <a href="#sec4" class="magnet contact-btn" onclick="toggleWidth(this)">LET'S TALK</a>
+        </div>
+    </center>
+    <!-- this code is written by @biisal tg:biisal-files & modified by TechifyBots -->
+    <!-- stealing credit doesn't make you developer..so try to give full credit to the developer 😊 u will not loose anything for giving proper credit.   -->
+
+    <div class="outer">
+        <div class="inner">
+            <div class="main" id="main">
+                <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
+                    width="100%"></video>
+                <div class="player"></div>
+                <div class="file-name">
+                    <h4>File name : </h4>
+                    <br>
+                    <p id="myDiv">{{file_name}}</p>
+                </div>
+                <div class="downloadBtn">
+                    <button class="magnet" onclick="vlc_player()"><img src="https://i.postimg.cc/15TQ4y7B/vlc.png"
+                            alt="">watch in VLC PLAYER</button>
+                    <button class="magnet" onclick="mx_player()"><img src="https://i.postimg.cc/sx4Msv4T/mx.png"
+                            alt="">watch in MX PLAYER</button>
+                    <button class="magnet" onclick="playit_player()"><img src="https://i.postimg.cc/RVGWYJFF/playit.png"
+                            alt="">watch in PLAYit
+                        PLAYER</button>
+                    <button class="magnet" onclick="km_player()"><img src="https://i.postimg.cc/wT9tFQ9Z/km.png"
+                            alt="">watch in KM PLAYER</button>
+                    <button class="magnet" onclick="s_player()"><img src="https://i.postimg.cc/XYJr6NGg/s.png"
+                            alt="">watch in S PLAYER</button>
+                    <button class="magnet" onclick="hd_player()"><img src="https://i.postimg.cc/rFT43LNh/hd.png"
+                            alt="">watch in HD
+                        PLAYER(4K)</button>
+                    <button class="magnet" onclick="bisalDownload()"><img style="height: 35px;"
+                            src="https://i.postimg.cc/Zncc9YLq/Pngtree-download-icon-3581467.png" alt="">download video
+                    </button>
+					<div style="
+  background: linear-gradient(135deg, #ff4e4e, #e63b3b);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 18px auto;
+  max-width: 90%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  line-height: 1.5;
+  font-style: italic;
+">
+  ⚠️ <i><b>Video not playing?</b> possibly because your browser or the player doesn't support codec.<br>
+  👉 Please <b>download</b> and <b>watch</b>.</i>
+					</div>
+				</div>               
+			
+			</div>
+            <div class="abt">
+                <div class="about">
+                    <div class="about-dets">
+                        <div class="abt-sec" id="sec1" style="padding: 160px 30px;">
+                            <h1 style="text-align: center;">WELCOME TO OUR <Span>STREAMING</Span> PAGE</h1>
+                            <p style="text-align: center; line-height: 2;word-spacing: 2px;  letter-spacing: 0.8px;">
+                                We're
+                                thrilled to have <span>you</span> here.
+                                Get ready for an
+                                amazing <span>experience</span>
+                                filled with <span>entertainment</span>, <span>fun</span>, and <span>surprises</span>.
+                                Grab
+                                your snacks, sit back, and <span>enjoy</span> the show!
+                            </p>
+                       <script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+						</div>
+                        <div class="abt-sec" id="sec2">
+                            <h1><span>FOLLOW</span> ME ON</h1>
+                            <div class="links chnl-link">
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>GITHUB</button></a>
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>TWITTER</button></a>
+				<a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>WEBSITE</button></a>
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>YOUTUBE</button></a>
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>LINKEDIN</button></a>
+				<a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>FACEBOOK</button></a>
+				<a class="magnet" href="https://t.me/spk_links"><button>TELEGRAM</button></a>
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>WHATSAPP</button></a>
+                                <a class="magnet" href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><button>INSTAGRAM</button></a>
+                            <script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+							</div>
+                        </div>
+                        <div class="abt-sec" id="sec3">
+                            <h1>OUR ALL <span>CHANNEL</span> LIST</h1>
+                            <div class="links bot-link">
+				<a class="magnet" href="https://t.me/+kGTubE7cUutkMDI9"><button>ONLY FANS</button></a>
+                                <a class="magnet" href="https://t.me/+bZR60U6KwVdiOTI9"><button>JAPANESE AV</button></a>
+				<a class="magnet" href="https://t.me/+Ra7WZMJKU_tlNGY1"><button>ADULT VIDEOS</button></a>
+                                <a class="magnet" href="https://t.me/+ibCfPYuD2rkxM2Fl"><button>DESHI VIDEOS</button></a>
+                                <a class="magnet" href="https://t.me/+yI0DNmInqM03ODll"><button>ADULT WEBSERIES & SHORTFILM</button></a>
+				<a class="magnet" href="https://t.me/+y6R8Exy7KB01MzI1"><button>HENTA ANIME</button></a>
+                            <script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+							</div>
+                        </div>
+                        <div class="abt-sec" id="sec4">
+                            <!-- this code is written by @biisal tg:biisal-files & modified by TechifyBots -->
+                            <!-- stealing credit doesn't make you developer..so try to give full credit to the developer 😊 u will not loose anything for giving proper credit.   -->
+
+                            <p style="text-align: center;">we can talk for your support and you can also report your problem</p>
+                            <div class="links contact">
+                                <a href="https://t.me/CallOwner_Bot"><button>CONTACT</button></a>
+                            <script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+			<script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+            <div class="mid">
+                <h1 class="mid-text">VISIT <a href="#sec3" onclick="bot_btn_clicked()"><span>OUR CHANNEL LIST</span></a>
+                    FOR
+                    MORE
+                    INFO</h1>
+            </div>
+
+            <div class="last-text">
+                <p style="font-weight: 500;">
+                    Welcome to our online streaming platform! Our website allows users to generate streamable links for
+                    various files using Telegram bots. Please note that we are not responsible for the content shared or
+                    streamed through our service. Users are encouraged to respect copyright laws and adhere to our
+                    community
+                    guidelines. Enjoy easy, hassle-free file streaming.
+		    <br/> <br/>
+		    This website only provides a service that helps you to play your videos online without downloading. It does not offer storage or dissemination functions. You can report videos that contain issues such as copyright infringement, explicit content, 18+, violence, etc. <a href="https://telegram.me/CallOwner_Bot"><b><span>Report</span></b></a>
+                    <br/> <br/>
+		   <u>𝐍𝐨𝐭𝐞</u> : 𝖨𝖿 𝗒𝗈𝗎 𝖿𝗈𝗎𝗇𝖽 𝖺𝗇𝗒 𝖻𝗋𝗈𝗄𝖾𝗇 𝗅𝗂𝗇𝗄 𝗍𝗁𝖾𝗇 𝗉𝗅𝖾𝖺𝗌𝖾 𝗋𝖾𝗉𝗈𝗋𝗍 𝗂𝗇 𝗆𝗒 <b><a href="https://t.me/spklink"><span>𝗌𝗎𝗉𝗉𝗈𝗋𝗍 𝗀𝗋𝗈𝗎𝗉</span></a></b>
+         	</p>
+            </div>
+
+            <center>
+                <div class="copyright">
+                    <h5 class="text-center">Copyright © 2024 All
+                        Rights Reserved.</h5>
+                    <div class="icons">
+                        <a href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><i class="fa-brands fa-github fa-lg"></i></a>
+                        <a href="https://t.me/spk_links"><i class="fa-brands fa-telegram fa-lg"></i></a>
+                        <a href="https://www.effectivegatecpm.com/az3skdj5?key=88cfc7361a971d3e94d30b0646858b41"><i
+                                class="fa-brands fa-instagram fa-lg"></i></a>
+                    </div>
+                    <h4 style="font-weight: 700;">This Page Is Made By <a
+                            href="https://t.me/spklink"><span>Subho</span></a></h4>
+		</div>
+				<script type="text/javascript">
+	atOptions = {
+		'key' : '3d51c2d0392597ac6bf9c9f18400dbe8',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/3d51c2d0392597ac6bf9c9f18400dbe8/invoke.js"></script>
+            </center>
+        </footer>
+</body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sheryjs/dist/Shery.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const uncopyableElement = document.querySelector(".uncopyable");
+
+        uncopyableElement.addEventListener("selectstart", function (event) {
+            event.preventDefault();
+        });
+    });
+</script>
+<script src="js/wow.min.js"></script>
+<script>
+    new WOW().init();
+</script>
+<script src="https://cdn.plyr.io/3.6.9/plyr.js"></script>
+<script src="https://biisal.github.io/Resources/StreamJs.js"></script>
+<script src="script.js"></script>
+
+</html>
+
+<!-- this code is written by @biisal tg:biisal-files & modified by TechifyBots -->
+<!-- stealing credit doesn't make you developer..so try to give full credit to the developer 😊 u will not loose anything for giving proper credit.   -->
+
+
+
+
+
+  
