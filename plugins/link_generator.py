@@ -78,10 +78,35 @@ async def link_generator(client: Client, message: Message):
             continue
 
     base64_string = await encode(f"get-{msg_id * abs(client.db_channel.id)}")
-    link = f"https://t.me/{client.username}?start={base64_string}"
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
+       # ✅ WEBSITE_URL_MODE যোগ করুন
+    if WEBSITE_URL_MODE:
+        link = f"{WEBSITE_URL}?file={base64_string}"
+    else:
+        link = f"https://t.me/{client.username}?start={base64_string}"
+    
+    # ✅ STREAM_MODE এর জন্য বাটন তৈরি করুন
+    buttons = []
+    if STREAM_MODE:
+        try:
+            from utils.file_properties import get_name, get_hash
+            msg = await client.get_messages(client.db_channel.id, msg_id)
+            if msg.video or msg.document:
+                file_name = get_name(msg)
+                file_hash = get_hash(msg)
+                stream_url = f"{URL}watch/{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                download_url = f"{URL}{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                buttons.extend([
+                    [InlineKeyboardButton("📥 Download", url=download_url), 
+                     InlineKeyboardButton("🎥 Watch", url=stream_url)],
+                    [InlineKeyboardButton("🌐 Web Player", web_app=WebAppInfo(url=stream_url))]
+                ])
+        except Exception as e:
+            print(f"Stream button error: {e}")
+    
+    buttons.append([InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')])
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
     await channel_message.reply_text(f"<b>Here is your link</b>\n\n{link}", quote=True, reply_markup=reply_markup)
-
 
 @Bot.on_message(filters.private & admin & filters.command("custom_batch"))
 async def custom_batch(client: Client, message: Message):
@@ -120,7 +145,28 @@ async def custom_batch(client: Client, message: Message):
     end_id = collected[-1] * abs(client.db_channel.id)
     string = f"get-{start_id}-{end_id}"
     base64_string = await encode(string)
-    link = f"https://t.me/{client.username}?start={base64_string}"
-
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')]])
+    # ✅ WEBSITE_URL_MODE যোগ করুন
+    if WEBSITE_URL_MODE:
+        link = f"{WEBSITE_URL}?batch={base64_string}"
+    else:
+        link = f"https://t.me/{client.username}?start={base64_string}"
+    
+    # ✅ STREAM_MODE এর জন্য বাটন তৈরি করুন
+    buttons = []
+    if STREAM_MODE and collected:
+        try:
+            from utils.file_properties import get_name, get_hash
+            # প্রথম মেসেজ থেকে স্ট্রিম লিঙ্ক তৈরি করুন
+            first_msg = await client.get_messages(client.db_channel.id, collected[0])
+            if first_msg.video or first_msg.document:
+                file_name = get_name(first_msg)
+                file_hash = get_hash(first_msg)
+                stream_url = f"{URL}watch/{first_msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                buttons.append([InlineKeyboardButton("🎥 Preview Stream", url=stream_url)])
+        except Exception as e:
+            print(f"Stream button error: {e}")
+    
+    buttons.append([InlineKeyboardButton("🔁 Share URL", url=f'https://telegram.me/share/url?url={link}')])
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
     await message.reply(f"<b>Here is your custom batch link:</b>\n\n{link}", reply_markup=reply_markup)
