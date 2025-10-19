@@ -20,3 +20,10 @@ bs4
 shortzy
 aiofiles
 asyncio
+
+# ✅ STREAM_MODE & WEBSITE_URL_MODE এর জন্য নতুন এড করুন:
+jinja2==3.1.2
+validators
+urllib3
+httpcore
+httpx
