@@ -18,6 +18,8 @@ import re
 import string 
 import string as rohit
 import time
+from urllib.parse import quote_plus
+from config import STREAM_MODE, URL, WEBSITE_URL_MODE, WEBSITE_URL
 from datetime import datetime, timedelta
 from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode, ChatAction
@@ -160,6 +162,29 @@ async def start_command(client: Client, message: Message):
 
             reply_markup = msg.reply_markup if DISABLE_CHANNEL_BUTTON else None
 
+              # ✅ STREAM_MODE বাটন যোগ করুন (এই অংশটা যোগ করুন)
+    stream_buttons = None
+    if STREAM_MODE and (msg.video or msg.document):
+        try:
+            from utils.file_properties import get_name, get_hash
+            file_name = get_name(msg)
+            file_hash = get_hash(msg)
+            
+            if file_name and file_hash:
+                stream_url = f"{URL}watch/{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                download_url = f"{URL}{msg.id}/{quote_plus(file_name)}?hash={file_hash}"
+                
+                stream_buttons = [
+                    [InlineKeyboardButton("📥 Download", url=download_url), 
+                     InlineKeyboardButton("🎥 Watch", url=stream_url)],
+                    [InlineKeyboardButton("🌐 Web Player", web_app=WebAppInfo(url=stream_url))]
+                ]
+        except Exception as e:
+            print(f"Stream button error: {e}")
+    
+    # যদি stream buttons থাকে তাহলে সেটা ব্যবহার করুন, নাহলে existing reply_markup
+    final_reply_markup = InlineKeyboardMarkup(stream_buttons) if stream_buttons else reply_markup
+    
             try:
                 copied_msg = await msg.copy(
                     chat_id=message.from_user.id,
